@@ -1,12 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <style> @media (max-width: 767px) {
-      .landscape-photo {
-        width: 100%;
-        height: auto;
-      }
-    }</style>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -372,17 +366,49 @@ http://www.tooplate.com/view/2109-the-card
 
         // Set Background images
         // https://www.jqueryscript.net/slideshow/Simple-jQuery-Background-Image-Slideshow-with-Fade-Transitions-Background-Cycle.html
-        bgCycle = $("body").backgroundCycle({
-          imageUrls: [
-            "img/photo-02b.jpeg",
-            "img/photo-03.jpg",
-            "img/photo-04.jpg",
-            "img/photo-05.jpg"
-          ],
-          fadeSpeed: 2000,
-          duration: -1,
-          backgroundSize: SCALING_MODE_COVER
-        });
+      // Define the image URLs for mobile and PC devices
+var mobileImageUrls = [
+  "img/mobile-image-01.jpg",
+  "img/mobile-image-02.jpg",
+  "img/mobile-image-03.jpg"
+];
+
+var pcImageUrls = [
+  "img/pc-image-01.jpg",
+  "img/pc-image-02.jpg",
+  "img/pc-image-03.jpg"
+];
+
+// Function to update background images based on screen size
+function updateBackgroundImages() {
+  var currentImageUrls;
+
+  if ($(window).width() <= 767) {
+    currentImageUrls = mobileImageUrls;
+  } else {
+    currentImageUrls = pcImageUrls;
+  }
+
+  bgCycle.update({
+    imageUrls: currentImageUrls
+  });
+}
+
+// Initialize the background image cycle
+var bgCycle = $("body").backgroundCycle({
+  imageUrls: pcImageUrls,
+  fadeSpeed: 2000,
+  duration: -1,
+  backgroundSize: SCALING_MODE_COVER
+});
+
+// Update background images on window resize
+$(window).resize(function() {
+  updateBackgroundImages();
+});
+
+// Initial call to set the correct background images on page load
+updateBackgroundImages();
 
         eachNavLink = $(".tm-nav-link");
         links = $(".tm-nav-links");
